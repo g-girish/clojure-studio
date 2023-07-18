@@ -7,8 +7,9 @@
                    [compojure "1.6.1"]
                    [http-kit "2.3.0"]
                    [ring/ring-defaults "0.3.2"]
-                   [org.clojure/data.json "0.2.6"]]
-  :main ^:skip-aot clojure-studio.core
+                   [org.clojure/data.json "0.2.6"]
+                   [com.novemberain/monger "3.1.0"]]
+  :main ^:skip-aot clojure-studio.web
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})

@@ -1,8 +1,5 @@
 (ns clojure-studio.core
-    (:require [org.httpkit.server :as server]
-              [compojure.core :refer :all]
-              [compojure.route :as route]
-              [ring.middleware.defaults :refer :all]
+    (:require [compojure.core :refer :all]
               [clojure.pprint :as pp]
               [clojure.string :as str]
               [clojure.data.json :as json])
@@ -32,18 +29,3 @@
      :headers {"Content-Type" "text/plain"}
      :body (-> (removeEmployees) (str "Deleted"))})
 
-(defroutes api-routes
-    (GET "/employees" [] employee-handler)
-    (GET "/employees/remove" [] remove-employees-handler)
-    (POST "/employee/add" [] add-employee-handler)
-    (route/not-found "404 - Page not found"))
-
-(defn -main
-  "First entry"
-  [& args]
-  (let [port (Integer/parseInt (or (System/getenv "PORT") "3000"))]
-    ; Run the server with Ring.defaults middleware
-    (server/run-server (wrap-defaults #'api-routes (assoc-in site-defaults [:security :anti-forgery] false)) {:port port})
-    ; Run the server without ring defaults
-    ; (server/run-server #'api-routes {:port port})
-    (println (str "Running webserver at http:/127.0.0.1:" port "/"))))
