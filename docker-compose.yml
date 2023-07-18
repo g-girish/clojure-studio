@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo
+    networks:
+      - clojure-studio
+    volumes:
+      - db-data:/data/db
+
+  clojure-studio:
+    image: clojure-studio
+    ports:
+      - 80:3000
+    networks:
+      - clojure-studio
+    environment:
+      STD_MONGO_URI: mongodb://mongo/clojure-studio
+      STD_ADMIN_LOGIN: admin
+      STD_ADMIN_PWD: admin
+
+networks:
+  clojure-studio:
+    driver: bridge
+
+volumes:
+  db-data:

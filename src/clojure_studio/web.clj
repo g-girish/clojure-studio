@@ -4,7 +4,8 @@
               [clojure.string :as str]
               [ring.middleware.defaults :refer :all]
               [clojure-studio.core :as studio]
-              [compojure.route :as route]))
+              [compojure.route :as route])
+     (:gen-class))
 
 (defroutes api-routes
     (GET "/employees" [] studio/employee-handler)
