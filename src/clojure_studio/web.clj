@@ -4,6 +4,8 @@
               [clojure.string :as str]
               [ring.middleware.defaults :refer :all]
               [clojure-studio.core :as studio]
+              [clojure-studio.db :as db]
+              [ring.util.response :as resp]
               [compojure.route :as route])
      (:gen-class))
 
@@ -11,6 +13,9 @@
     (GET "/employees" [] studio/employee-handler)
     (GET "/employees/remove" [] studio/remove-employees-handler)
     (POST "/employee/add" [] studio/add-employee-handler)
+;;     (POST "/articles" [title body]
+;;       (do (db/create-article title body)
+;;          (resp/redirect "/")))
     (route/not-found "404 - Page not found"))
 
 (defn -main

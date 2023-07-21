@@ -1,4 +1,12 @@
 (ns clojure-studio.db
-    (:require [monger.core :as mg] [monger.collection :as mc]))
+    (:require [clojure.java.jdbc :as j])
+    (:gen-class))
 
-;; (def db (-> "mongodb://127.0.0.1/clojure_studio" mg/connect-via-url :db))
+(def pg-db {:dbtype "postgresql"
+            :dbname "clojure_studio"
+            :host "localhost"
+            :user "girish"
+            :password "password"})
+
+(defn all-employees []
+  (j/query pg-db ["select * from employees"]))

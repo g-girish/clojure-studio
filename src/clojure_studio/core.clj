@@ -2,7 +2,8 @@
     (:require [compojure.core :refer :all]
               [clojure.pprint :as pp]
               [clojure.string :as str]
-              [clojure.data.json :as json])
+              [clojure.data.json :as json]
+              [clojure-studio.db :as db])
     (:gen-class))
 
 (def employee-collection (atom []))
@@ -16,6 +17,7 @@
 (defn employee-handler "list all employees handler" [req]
     {:status 200
      :headers {"Content-Type"  "text/plain"}
+;;      :body (json/write-str (db/all-employees))})
      :body  (str (json/write-str @employee-collection))})
 
 (defn add-employee-handler "add an employee handler" [req]
