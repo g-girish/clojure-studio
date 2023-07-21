@@ -9,8 +9,16 @@
                    [ring/ring-defaults "0.3.2"]
                    [org.clojure/data.json "0.2.6"]
                    [org.clojure/java.jdbc "0.7.12"]
-                   [org.postgresql/postgresql "42.2.16.jre7"]]
+                   [org.postgresql/postgresql "42.2.16.jre7"]
+                   [migratus "1.5.1"]]
   :main ^:skip-aot clojure-studio.web
+  :plugins [[migratus-lein "0.7.3"]]
+  :migratus {:store :database
+             :migration-dir "migrations"
+             :db {:dbtype "postgresql"
+                  :dbname "clojure_studio"
+                  :user "girish"
+                  :password "password"}}
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})

@@ -6,7 +6,8 @@
               [clojure-studio.core :as studio]
               [clojure-studio.db :as db]
               [ring.util.response :as resp]
-              [compojure.route :as route])
+              [compojure.route :as route]
+              [clojure-studio.restaurant :as res])
      (:gen-class))
 
 (defroutes api-routes
@@ -16,6 +17,8 @@
 ;;     (POST "/articles" [title body]
 ;;       (do (db/create-article title body)
 ;;          (resp/redirect "/")))
+    (GET "/menu" [] res/menu)
+
     (route/not-found "404 - Page not found"))
 
 (defn -main
