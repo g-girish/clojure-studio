@@ -7,17 +7,17 @@
               [clojure-studio.db :as db]
               [ring.util.response :as resp]
               [compojure.route :as route]
-              [clojure-studio.restaurant :as res])
+              [resource-mgr.restaurant :as res]
+              [resource-mgr.order :as order]
+              [resource-mgr.customer :as customer])
      (:gen-class))
 
 (defroutes api-routes
     (GET "/employees" [] studio/employee-handler)
     (GET "/employees/remove" [] studio/remove-employees-handler)
     (POST "/employee/add" [] studio/add-employee-handler)
-;;     (POST "/articles" [title body]
-;;       (do (db/create-article title body)
-;;          (resp/redirect "/")))
     (GET "/menu" [] res/menu)
+    (POST "/place/order" [] order/order)
 
     (route/not-found "404 - Page not found"))
 
