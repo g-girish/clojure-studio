@@ -19,8 +19,8 @@
     (GET "/menu" [] res/menu)
     (POST "/place/order" [] order/order)
     (GET "/order" [] order/details)
-    (POST "/prepare/order" [] order/prepare)
-
+    (POST "/update/order/status" [] order/update)
+    (GET "/request/bill" [] res/request)
     (route/not-found "404 - Page not found"))
 
 (defn -main
