@@ -21,6 +21,7 @@
     (GET "/order" [] order/details)
     (POST "/update/order/status" [] order/update)
     (GET "/request/bill" [] res/request)
+    (POST "/pay/bill" [] order/pay)
     (route/not-found "404 - Page not found"))
 
 (defn -main

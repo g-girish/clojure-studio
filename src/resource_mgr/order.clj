@@ -56,7 +56,7 @@
     (do
       (let [order-id (:id params)]
         (j/query pg-db
-                 ["SELECT o.id as order_id, o.customer_id, json_agg(json_build_object('item_id', i.id, 'name', i.name, 'price', i.price, 'quantity', m.qty)) AS items, o.subtotal::smallint, o.tax::smallint, o.created_at, o.status, o.total::bigint FROM gl_orders o JOIN gl_order_items_map m ON o.id = m.order_id JOIN gl_menu i ON m.item_id = i.id where o.id = ? GROUP BY o.id, o.created_at, o.customer_id"
+                 ["SELECT o.id as order_id, o.customer_id, json_agg(json_build_object('item_id', i.id, 'name', i.name, 'price', i.price, 'quantity', m.qty)) AS items, o.subtotal::smallint, o.tax::smallint, o.created_at, o.status, o.total::bigint, o.payment_mode FROM gl_orders o JOIN gl_order_items_map m ON o.id = m.order_id JOIN gl_menu i ON m.item_id = i.id where o.id = ? GROUP BY o.id, o.created_at, o.customer_id"
                   order-id])))
     (do
       (str "id param is required"))))
@@ -72,6 +72,22 @@
           (str "Status updated."))
         (do
           (str "Status not updated."))))
+    (catch java.sql.SQLException _
+      (str "An SQL error occured"))
+    (catch Exception e
+      (str "An error occured:" (.getMessage e)))))
+
+(defn payBill [params]
+  (try
+    (let [updateQuery       "UPDATE gl_orders SET status = 'complete', payment_mode = ? WHERE id = ?"
+          payment-mode      (:payment-mode params)
+          order-id          (:order-id params)
+          execute           (j/execute! pg-db [updateQuery payment-mode order-id])]
+      (if execute
+        (do
+          (str "Bill Paid."))
+        (do
+          (str "Bill not paid."))))
     (catch java.sql.SQLException _
       (str "An SQL error occured"))
     (catch Exception e
@@ -100,6 +116,11 @@
   {:status  200
    :headers {"Content-Type" "text/json"}
    :body    (updateOrderStatus (:params req))})
+
+(defn pay [req]
+  {:status  200
+   :headers {"Content-Type" "text/json"}
+   :body    (payBill (:params req))})
 
 ;(defn prepareOrder [params customer]
 ;  (let [insert-query       "INSERT INTO gl_orders (customer_id, subtotal, tax, total, status) VALUES (?, ?, ?, ?, ?::order_statuses)"
