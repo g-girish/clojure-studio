@@ -8,9 +8,10 @@ CREATE TABLE
             CONSTRAINT fk_order_item_order_id_map
                 FOREIGN KEY (order_id)
                     REFERENCES gl_orders(id)
-                        ON DELETE SET NULL,
+                            ON DELETE SET NULL
+                                INITIALLY DEFERRED,
             CONSTRAINT fk_order_item_item_id_map
                 FOREIGN KEY (item_id)
                     REFERENCES gl_menu(id)
                         ON DELETE SET NULL
-        )
+        );

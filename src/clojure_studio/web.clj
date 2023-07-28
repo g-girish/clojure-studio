@@ -18,6 +18,8 @@
     (POST "/employee/add" [] studio/add-employee-handler)
     (GET "/menu" [] res/menu)
     (POST "/place/order" [] order/order)
+    (GET "/order" [] order/details)
+    (POST "/prepare/order" [] order/prepare)
 
     (route/not-found "404 - Page not found"))
 

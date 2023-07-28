@@ -6,7 +6,8 @@
             :dbname "clojure_studio"
             :host "localhost"
             :user "girish"
-            :password "password"})
+            :password "password"
+            :stringtype "unspecified"})
 
 (defn all-employees []
   (j/query pg-db ["select * from employees"]))
